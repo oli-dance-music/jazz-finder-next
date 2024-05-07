@@ -1,0 +1,22 @@
+.searchForm {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+	gap: 1rem;
+	border: 1px solid lightgray;
+	padding: 1rem;
+}
+.formElement {
+	label {
+		padding: 1rem;
+	}
+	input[type='number'] {
+		width: 4.5rem;
+	}
+}
+.resetButton {
+	margin-left: 1rem;
+	background: none;
+	border: none;
+	color: inherit;
+}

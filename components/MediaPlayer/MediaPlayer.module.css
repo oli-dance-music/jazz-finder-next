@@ -1,0 +1,13 @@
+.mediaPlayer {
+	margin-bottom: 1rem;
+}
+
+.playerStatus {
+	padding: 1rem;
+	border: 1px solid lightgray;
+	border-bottom: none;
+}
+
+:global(.rhap_container) {
+	margin-bottom: 1rem;
+}

@@ -1,0 +1,10 @@
+.loader {
+	text-align: center;
+}
+.colorRingWrapper {
+	--ring-color-1: #e15b64;
+	--ring-color-2: #f47e60;
+	--ring-color-3: #f8b26a;
+	--ring-color-4: #abbd81;
+	--ring-color-5: #849b87;
+}

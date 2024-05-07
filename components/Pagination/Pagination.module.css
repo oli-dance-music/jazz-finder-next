@@ -1,0 +1,15 @@
+.filterStatus {
+	text-align: center;
+}
+.pagination {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 1rem 0;
+	gap: 0.5rem;
+}
+
+.currentPage {
+	display: inline-block;
+	padding: 0 0.5rem;
+}
