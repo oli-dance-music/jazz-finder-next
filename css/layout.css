@@ -97,3 +97,7 @@ Hauptinhalt. */
 		max-width: 100vi;
 	}
 }
+
+.rhap_container {
+	margin-bottom: 1rem;
+}
