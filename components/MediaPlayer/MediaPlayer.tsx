@@ -13,32 +13,35 @@ import type { Recording as RecordingType } from '@/types/media';
 
 export default function MediaPlayer() {
 	const [{ playing, playlist }, mediaDispatch] = useMediaContext()!;
+	const recordings = playlist.recordings as RecordingType[] | [];
 
 	/* const [title, setTitle] = useHeaderContext(); */
 
 	const handleMediaPlayer = (action: string) => {
 		//if there is no playlist, we dont need to do anything
-		if (!playlist.length) return;
+		if (!recordings.length) return;
 
 		switch (action) {
 			case 'startPlaylist':
-				if (playlist.length && playlist[0].src) {
+				if (recordings.length && recordings[0].src) {
 					mediaDispatch({
 						action: 'play',
-						payload: playlist[0],
+						payload: recordings[0],
 					});
 				}
 				break;
 			case 'next':
 				mediaDispatch({
 					action: 'play',
-					payload: playlist[playing! < playlist.length - 1 ? playing! + 1 : 0],
+					payload:
+						recordings[playing! < recordings.length - 1 ? playing! + 1 : 0],
 				});
 				break;
 			case 'previous':
 				mediaDispatch({
 					action: 'play',
-					payload: playlist[playing! > 0 ? playing! - 1 : playlist.length - 1],
+					payload:
+						recordings[playing! > 0 ? playing! - 1 : recordings.length - 1],
 				});
 				break;
 		}
@@ -52,7 +55,7 @@ export default function MediaPlayer() {
 						{/* <Helmet>
 							<title>🎵 {playlist[playing].Title} - Jazz Finder</title>
 						</Helmet> */}
-						Playing: {playlist[playing].Artist} - {playlist[playing].Title}
+						Playing: {recordings[playing].Artist} - {recordings[playing].Title}
 					</>
 				) : (
 					<> No song is playing </>
@@ -60,7 +63,7 @@ export default function MediaPlayer() {
 			</div>
 			<AudioPlayer
 				customAdditionalControls={[]}
-				src={playing !== null ? playlist[playing].src : ''}
+				src={playing !== null ? recordings[playing].src : ''}
 				showSkipControls
 				onPlayError={() => handleMediaPlayer('startPlaylist')}
 				onClickNext={() => handleMediaPlayer('next')}

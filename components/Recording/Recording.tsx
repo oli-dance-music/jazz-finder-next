@@ -65,11 +65,12 @@ export default async function Recording(recording: Recording) {
 
 	return (
 		<div className={classes.recording}>
-			<RecordingButtons recording={recording} mp3Url={mp3Url!} />
 			<h3>
-				<Link href={`/recordings/${recording.IDX}`}>
-					{title} - {artist} ({year})
-				</Link>
+				{/* <Link href={`/recordings/${recording.IDX}`}> */}
+				{title} - {artist} ({year}){/* </Link> */}
+				<small>
+					<RecordingButtons recording={recording} mp3Url={mp3Url!} />
+				</small>
 			</h3>
 			<dl className={classes.recordingDetails}>
 				<dt>Performers</dt>
@@ -78,16 +79,17 @@ export default async function Recording(recording: Recording) {
 					<br />
 					{performersMapped ?? performersMapped}
 				</dd>
-				{/* 				<dt>Record Date</dt>
+				<dt>Record Date</dt>
 				<dd>
 					{dateRaw} (Label: {record})
-				</dd> */}
+				</dd>
 			</dl>
-			{/* 			<p>
+			<p>
 				<a href={url} target="_blank" rel="noreferrer">
 					Open on Archive.org
 				</a>
-			</p> */}
+			</p>
+			<hr />
 		</div>
 	);
 }

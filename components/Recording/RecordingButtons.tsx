@@ -9,8 +9,12 @@ type Props = {
 export default function RecordingButtons({ recording, mp3Url }: Props) {
 	const [{ playing, playlist }, mediaDispatch] = useMediaContext()!;
 
-	const isInPlaylist = playlist.some(({ IDX }) => IDX === recording.IDX);
-	const isPlaying = playing !== null && playlist[playing].IDX === recording.IDX;
+	let recordings = playlist.recordings;
+	if (recordings === undefined) recordings = [];
+
+	const isInPlaylist = recordings.some(({ IDX }) => IDX === recording.IDX);
+	const isPlaying =
+		playing !== null && recordings[playing].IDX === recording.IDX;
 
 	return (
 		<>

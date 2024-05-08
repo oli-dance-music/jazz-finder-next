@@ -1,3 +1,4 @@
+import type { Playlist } from '@prisma/client';
 import type { Dispatch } from 'react';
 
 export type Recording = {
@@ -21,16 +22,35 @@ type Performer = {
 	[key: string]: string[];
 };
 
+export type PlaylistType = {
+	recordings: Recording[];
+	id?: string;
+	created?: Date;
+	updated?: Date;
+	name?: string;
+	public?: boolean;
+	userId?: string;
+};
+/* | Playlist; */
+
 export type MediaReducer = {
 	playing: number | null;
-	playlist: Recording[];
+	playlist: PlaylistType;
 };
 
 export type MediaReducerMessage =
 	| { action: 'emptyPlaylist' }
 	| { action: 'play'; payload: Recording }
 	| { action: 'addToPlaylist'; payload: Recording }
-	| { action: 'removeFromPlaylist'; payload: Recording };
+	| { action: 'removeFromPlaylist'; payload: Recording }
+	| { action: 'loadPlaylist'; payload: Playlist };
+/* | {
+			action: 'updatePlaylist';
+			payload: {
+				id?: string;
+				name?: string;
+			};
+	  }; */
 
 export type MediaReducerContext =
 	| [MediaReducer, Dispatch<MediaReducerMessage>]
