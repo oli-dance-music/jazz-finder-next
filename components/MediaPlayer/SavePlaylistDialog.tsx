@@ -23,7 +23,8 @@ export default function SavePlaylistDialog({ disabled }: Props) {
 	const [name, setName] = useState(playlist.name);
 
 	useEffect(() => {
-		setName(playlist.name);
+		console.log(playlist.name);
+		setName(playlist.name ?? '');
 	}, [playlist.name]);
 
 	const formRef = useRef<null | HTMLFormElement>(null);

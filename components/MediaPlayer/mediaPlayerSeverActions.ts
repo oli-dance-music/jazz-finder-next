@@ -52,6 +52,8 @@ export async function savePlaylist(prevState: any, formData: FormData) {
 		public: zfd.checkbox(),
 	});
 
+	console.log(formData);
+
 	const { success, data, error } = schema.safeParse(formData);
 
 	if (!success) {
