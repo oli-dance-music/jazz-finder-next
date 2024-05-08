@@ -13,8 +13,8 @@ type Props = {
 /*
     TODO
     - When saving a new playlist, the name and id are not updating in the reducer state 
+    - When saving a new playlist after loading another one, the one loaded is overwritten, likely because the state management of the id is missing
     - Clean success message, when the modal is closed
-    - BUGFIX: name is changing to uncontrolled somewhere because the state gets undefined....
 */
 export default function SavePlaylistDialog({ disabled }: Props) {
 	const [{ playlist }, mediaDispatch] = useMediaContext()!;
