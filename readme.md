@@ -9,7 +9,6 @@ Jazz Finder (working title) is an app that lets you search the internet and find
 ## Sprint TODOs
 
 - Figure out solution for Serverless function timing out on Vercel
-- figure out what else to do to not have such a crappy project abgabe
 - code clean up and documentation
 
 ## Milestones / Ideas for future releases
