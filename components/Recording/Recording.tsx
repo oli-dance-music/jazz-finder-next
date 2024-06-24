@@ -1,17 +1,19 @@
 import classes from './Recording.module.css';
-import Toggle from '../primitives/Toggle/Toggle';
-import axios from 'redaxios';
-import { type Dispatch, type ReactNode, type SetStateAction } from 'react';
-import Card from '../primitives/Card/Card';
+import { type ReactNode } from 'react';
 import type { Recording } from '@/types/media';
 import RecordingArtist from './RecordingArtist';
 import dynamic from 'next/dynamic';
-import Link from 'next/link';
 
 const RecordingButtons = dynamic(() => import('./RecordingButtons'), {
 	ssr: false,
 });
 
+/**
+ * Renders a recording component with details such as title, artist, year, performers, record date, and a link to open on Archive.org.
+ *
+ * @param {Recording} recording - An object containing information about the recording, including artist, title, performers, year, record date, URL, and raw data.
+ * @return {JSX.Element} A React component representing the recording.
+ */
 export default async function Recording(recording: Recording) {
 	const {
 		Artist: artist,

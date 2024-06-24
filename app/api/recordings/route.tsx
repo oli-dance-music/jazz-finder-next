@@ -3,10 +3,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import allRecordings from '@/lib/data.json';
 import type { Recording } from '@/types/media';
 
-/*
-https://nextjs.org/docs/app/api-reference/functions/next-request
-https://nextjs.org/docs/app/api-reference/functions/next-response
-*/
+/**
+ * Retrieves recordings based on the provided search parameters and returns a JSON response.
+ *
+ * @param {NextRequest} request - The Next.js request object containing the search parameters.
+ * @return {NextResponse} A JSON response containing the filtered recordings.
+ */
 export function GET(request: NextRequest) {
 	const searchTerm = request.nextUrl.searchParams.get('searchTerm') ?? '';
 	const yearStart = request.nextUrl.searchParams.get('yearStart') ?? '';
@@ -18,15 +20,15 @@ export function GET(request: NextRequest) {
 	const pageSizeRaw = Number(request.nextUrl.searchParams.get('pageSize'));
 	const pageSize = pageSizeRaw >= 1 ? pageSizeRaw : 10;
 
-	// Array mit Einträgen bzw. leerer Array, falls searchTerm leer ist
+	// Empty array if searchTerm is empty, otherwise array with matching entries
 	const filteredRecordings = getRecordings(searchTerm, yearStart, yearEnd);
 
-	// Kurze Variante, fügt automatisch Statuscode 200 und Conten-Type JSON hinzu.
+	// Short version, automatically adds status code 200 and Content-Type JSON.
 	return NextResponse.json(
 		buildResponse(filteredRecordings, currentPage, pageSize)
 	);
 
-	// Ausführliche Variante, wenn man z.B. CORS-Header setzen möchte:
+	// Verbose version, which can be used if you want to set CORS headers, for example:
 	return new NextResponse(
 		JSON.stringify(buildResponse(filteredRecordings, currentPage, pageSize)),
 		{
@@ -41,6 +43,14 @@ export function GET(request: NextRequest) {
 	);
 }
 
+/**
+ * Retrieves recordings that match the given search terms and year range.
+ *
+ * @param {string} searchTermRaw - A comma-separated string of search terms. Defaults to an empty string.
+ * @param {string} yearStart - The starting year for the search. Defaults to an empty string.
+ * @param {string} yearEnd - The ending year for the search. Defaults to an empty string.
+ * @return {Array} An array of recordings that match the search criteria.
+ */
 function getRecordings(searchTermRaw = '', yearStart = '', yearEnd = '') {
 	//replace , with | for regex to find any term
 
@@ -81,13 +91,26 @@ function getRecordings(searchTermRaw = '', yearStart = '', yearEnd = '') {
 	return filteredRecordings;
 }
 
+/**
+ * Builds a response object containing a subset of recordings, along with pagination and query information.
+ *
+ * @param {Recording[]} recordings - The array of recordings to be paginated.
+ * @param {number} [currentPage=1] - The current page number. Defaults to 1.
+ * @param {number} [pageSize=10] - The number of recordings per page. Defaults to 10.
+ * @return {Object} An object containing the following properties:
+ *   - results: An array of recordings for the current page.
+ *   - current_page: The current page number.
+ *   - page_size: The number of recordings per page.
+ *   - total_results: The total number of recordings.
+ *   - total_pages: The total number of pages.
+ */
 function buildResponse(
 	recordings: Recording[],
 	currentPage = 1,
 	pageSize = 10
 ) {
 	const lastPage = Math.ceil(recordings.length / pageSize);
-	//if the current page is too high, set it to the last existing page, if it is too low set it to 1
+	//if the current page is not existing, set it to the last existing page, if it is too low set it to 1
 	currentPage = Math.max(1, Math.min(currentPage, lastPage));
 
 	const start = (currentPage - 1) * pageSize;

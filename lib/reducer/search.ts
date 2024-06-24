@@ -9,11 +9,22 @@ import axios from 'redaxios';
 
 export const SearchContext = createContext<SearchReducerContext>(null);
 
+/**
+ * Returns the search context from the useContext hook.
+ *
+ * @return {SearchReducerContext} The search context from the useContext hook.
+ */
 export function useSearchContext() {
 	return useContext(SearchContext);
 }
 
-//this handles all the search form changes
+/**
+ * A function that handles all the search form changes.
+ *
+ * @param {SearchReducer} search - The current search state.
+ * @param {SearchReducerMessage} message - The message triggering the action.
+ * @return {SearchReducer} The updated search state based on the message action.
+ */
 function searchReducer(search: SearchReducer, message: SearchReducerMessage) {
 	switch (message.action) {
 		case 'set':
@@ -23,11 +34,20 @@ function searchReducer(search: SearchReducer, message: SearchReducerMessage) {
 	}
 }
 
+/**
+ * Returns the search state and dispatch function using the `useReducer` hook with the `searchReducer` and `getInitialSearch` functions.
+ *
+ * @return {[SearchReducer, (message: SearchReducerMessage) => void]} The search state and dispatch function.
+ */
 export function useSearchReducer() {
 	return useReducer(searchReducer, null, getInitialSearch);
 }
 
-//this returns the default values for the search
+/**
+ * Returns an object with default values for the search reducer.
+ *
+ * @return {SearchReducer} An object with default values for the search reducer.
+ */
 function getSearchDefaults() {
 	return {
 		searchTerm: '',
@@ -38,7 +58,11 @@ function getSearchDefaults() {
 	} as SearchReducer;
 }
 
-//this returns the initial search values based on either the url parameters or the default values
+/**
+ * Returns the initial search values based on either the default values or the URL parameters.
+ *
+ * @return {SearchReducer} The initial search values.
+ */
 export function getInitialSearch() {
 	const defaultValues = getSearchDefaults();
 
@@ -57,6 +81,14 @@ export function getInitialSearch() {
 	return defaultValues;
 }
 
+/**
+ * Perform a search operation and handle loading state based on search parameters.
+ *
+ * @param {SearchHook} search - The search parameters including searchTerm, yearStart, yearEnd, currentPage, and pageSize.
+ * @param {Function} setSearchResults - Function to set the search results data.
+ * @param {Function} setLoading - Function to set the loading state.
+ * @return {void} No explicit return value.
+ */
 export function useSearchHook({
 	search,
 	setSearchResults,
@@ -83,6 +115,11 @@ export function useSearchHook({
 
 		window.history.replaceState({}, '', url.href); */
 
+		/**
+		 * Fetches data from the API and updates the search results and loading state.
+		 *
+		 * @return {Promise<void>} - A promise that resolves when the data is fetched and the search results and loading state are updated.
+		 */
 		const fetchData = async () => {
 			try {
 				//accessing mock api that is hosted serverless on the same url

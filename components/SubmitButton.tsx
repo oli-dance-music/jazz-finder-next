@@ -2,31 +2,23 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import { useFormStatus } from 'react-dom';
 
-/*
-Für die Verwendung von useFormStatus() muss die Komponente
-innerhalb eines <form> Elements liegen und eine eigenständige
-Client-Komponente sein.
-https://react.dev/reference/react-dom/hooks/useFormStatus */
-
-/* 
-Im Button soll als default "Absenden" oder "Warten…" stehen, je
-nachdem, ob pending false oder true ist.
-Der Inhalt des Buttons soll aber konfigurierbar sein,  nutzt
-dafür zwei Props: readyContent und pendingContent. Diese sollen
-alles enthalten können, was in React dargestellt werden kann.
-*/
-
 type Props = {
 	readyContent?: ReactNode;
 	pendingContent?: ReactNode;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-/* Rest und Spread-Syntax wird verwendet, um dem HTML-Element
-alle weiteren möglichen Attribute zukommen zu lassen, ohne
-dass dafür eigene Props geschrieben werden. */
+/**
+ * Renders a submit button that can be disabled based on the pending state of a form.
+ *
+ * @param {Props} props - The component props.
+ * @param {ReactNode} [props.readyContent='Absenden'] - The content to display when the form is not pending.
+ * @param {ReactNode} [props.pendingContent='Warten…'] - The content to display when the form is pending.
+ * @param {ButtonHTMLAttributes<HTMLButtonElement>} atts - Additional button attributes.
+ * @return {JSX.Element} The rendered submit button.
+ */
 export default function SubmitButton({
-	readyContent = 'Absenden',
-	pendingContent = 'Warten…',
+	readyContent = 'Send',
+	pendingContent = 'Wait…',
 	...atts
 }: Props) {
 	const { pending } = useFormStatus();

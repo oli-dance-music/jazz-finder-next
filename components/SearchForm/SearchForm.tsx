@@ -2,8 +2,12 @@
 import { useEffect, useState } from 'react';
 import classes from './SearchForm.module.css';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
-import useConfirm from '@/hooks/useConfirm';
 
+/**
+ * Renders a search form component that allows users to search for songs based on search terms, year range, and submit the form.
+ *
+ * @return {JSX.Element} The search form component.
+ */
 export default function SearchForm() {
 	const searchParams = useSearchParams();
 	const pathname = usePathname();
@@ -21,6 +25,12 @@ export default function SearchForm() {
 		searchParams.get('yearEnd')?.toString() ?? ''
 	);
 
+	/**
+	 * Handles the search by updating the URL parameters based on the provided search parameters.
+	 *
+	 * @param {Array<{ param: string; value: string }>} params - An array of objects representing the search parameters.
+	 * @return {void} This function does not return anything.
+	 */
 	function handleSearch(params: { param: string; value: string }[]) {
 		const urlSearchParams = new URLSearchParams(searchParams);
 

@@ -9,10 +9,15 @@ type Props = {
 	};
 };
 
-/*
-https://nextjs.org/docs/app/api-reference/functions/next-request
-https://nextjs.org/docs/app/api-reference/functions/next-response
-*/
+/**
+ * GET function for retrieving a specific recording by IDX.
+ * 	https://nextjs.org/docs/app/api-reference/functions/next-request
+ *	https://nextjs.org/docs/app/api-reference/functions/next-response
+ *
+ * @param {NextRequest} request - The incoming request object.
+ * @param {Props} props - The props object containing the IDX parameter.
+ * @returns {NextResponse} The response object containing the recording data.
+ */
 export function GET(request: NextRequest, { params: { IDX } }: Props) {
 	console.log('idx', IDX);
 
@@ -24,6 +29,12 @@ export function GET(request: NextRequest, { params: { IDX } }: Props) {
 	return NextResponse.json(recording);
 }
 
+/**
+ * Retrieves a recording based on the provided IDX.
+ *
+ * @param {string} IDX - The unique identifier of the recording to retrieve.
+ * @return {Recording | null} The matching recording if found, otherwise null.
+ */
 function getRecording(IDX: string) {
 	//replace , with | for regex to find any term
 
@@ -37,24 +48,4 @@ function getRecording(IDX: string) {
 		return null;
 	}
 	return filteredRecordings[0];
-}
-
-function buildResponse(
-	recordings: Recording[],
-	currentPage = 1,
-	pageSize = 10
-) {
-	const lastPage = Math.ceil(recordings.length / pageSize);
-	//if the current page is too high, set it to the last existing page, if it is too low set it to 1
-	currentPage = Math.max(1, Math.min(currentPage, lastPage));
-
-	const start = (currentPage - 1) * pageSize;
-	const end = start + pageSize;
-	return {
-		results: recordings.slice(start, end),
-		current_page: currentPage,
-		page_size: pageSize,
-		total_results: recordings.length,
-		total_pages: lastPage,
-	};
 }

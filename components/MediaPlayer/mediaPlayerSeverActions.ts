@@ -4,6 +4,13 @@ import prisma from '@/prisma/db';
 import { z } from 'zod';
 import { zfd } from 'zod-form-data';
 
+/**
+ * Deletes a playlist from the server.
+ *
+ * @param {any} prevState - The previous state of the playlist.
+ * @param {FormData} formData - The form data containing the playlist ID.
+ * @return {Promise<{message: string, status: string}>} - A promise that resolves to an object with a message and status indicating the result of the deletion.
+ */
 export async function deletePlaylist(prevState: any, formData: FormData) {
 	const schema = zfd.formData({
 		id: zfd.text(z.string().uuid()),
@@ -29,6 +36,11 @@ export async function deletePlaylist(prevState: any, formData: FormData) {
 	};
 }
 
+/**
+ * Loads playlists from the server.
+ *
+ * @return {Promise<Playlist[]>} The playlists loaded from the server.
+ */
 export async function loadPlaylists() {
 	const playlists = await prisma.playlist.findMany({
 		//where: { approved: false },
@@ -39,8 +51,13 @@ export async function loadPlaylists() {
 	return playlists;
 }
 
-/* Wichtig: Wenn das Formular useFormState nutzt, wird formData zum
-zweiten Parameter, der erste ist der Startwert von useFormData */
+/**
+ * Saves a playlist to the server.
+ *
+ * @param {any} prevState - The previous state of the playlist.
+ * @param {FormData} formData - The form data containing the playlist details.
+ * @return {Promise<Object>} A promise that resolves to an object with a message, status, and playlist ID.
+ */
 export async function savePlaylist(prevState: any, formData: FormData) {
 	const schema = zfd.formData({
 		id: zfd.text(z.string().uuid()).optional(),

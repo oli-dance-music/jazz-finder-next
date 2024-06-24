@@ -16,6 +16,13 @@ type Props = {
     - When saving a new playlist after loading another one, the one loaded is overwritten, likely because the state management of the id is missing
     - Clean success message, when the modal is closed
 */
+
+/**
+ * Renders a dialog component for saving a playlist.
+ *
+ * @param {Props} disabled - A boolean indicating if the dialog should be disabled.
+ * @return {JSX.Element} The rendered SavePlaylistDialog component.
+ */
 export default function SavePlaylistDialog({ disabled }: Props) {
 	const [{ playlist }, mediaDispatch] = useMediaContext()!;
 	const recordings = playlist.recordings as Recording[];

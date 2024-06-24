@@ -17,6 +17,13 @@ type Props = {
     TODO
     - Clean success message, when the modal is closed
 */
+
+/**
+ * Renders a dialog for deleting a playlist.
+ *
+ * @param {Props} disabled - Flag indicating if the dialog is disabled
+ * @return {JSX.Element} The JSX element representing the delete playlist dialog
+ */
 export default function DeletePlaylistDialog({ disabled }: Props) {
 	const [{ playlist }, mediaDispatch] = useMediaContext()!;
 

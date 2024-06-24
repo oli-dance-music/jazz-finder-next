@@ -10,10 +10,22 @@ import { createContext, useContext, useReducer } from 'react';
 
 export const MediaContext = createContext<MediaReducerContext>(null);
 
+/**
+ * Returns the media context from the MediaContext provider.
+ *
+ * @return {MediaReducerContext | null} The media context or null if the provider is not found.
+ */
 export function useMediaContext() {
 	return useContext(MediaContext);
 }
 
+/**
+ * Reduces the media state based on the given message.
+ *
+ * @param {MediaReducer} media - The current media state.
+ * @param {MediaReducerMessage} message - The message to process.
+ * @return {MediaReducer} The updated media state.
+ */
 export function mediaReducer(
 	media: MediaReducer,
 	message: MediaReducerMessage
@@ -124,10 +136,28 @@ export function mediaReducer(
 	}
 }
 
+/**
+ * Returns a media state and dispatch function using the `useReducer` hook with the `mediaReducer` and
+ * `getInitialMedia` functions. The media state represents the current state of the media player, including
+ * the currently playing song and the playlist. The dispatch function is used to update the media state by
+ * sending a message to the `mediaReducer` function.
+ *
+ * @return {[
+ *   MediaReducer,
+ *   (message: MediaReducerMessage) => void
+ * ]} The media state and dispatch function.
+ */
 export function useMediaReducer() {
 	return useReducer(mediaReducer, getInitialMedia());
 }
 
+/**
+ * Retrieves the initial media state by loading the playlist from local storage.
+ * If the playlist data is invalid or not present, an empty playlist is created.
+ *
+ * @return {MediaReducer} The initial media state with the playing song set to null
+ * and the playlist containing the loaded recordings.
+ */
 export function getInitialMedia(): MediaReducer {
 	let playlist: PlaylistType = { recordings: [] };
 
@@ -145,8 +175,6 @@ export function getInitialMedia(): MediaReducer {
 		//console.log('Fehlerhafte Daten. Resetting playlist');
 		playlist = { recordings: [] };
 	}
-
-	console.log(playlist);
 
 	return {
 		playing: null,

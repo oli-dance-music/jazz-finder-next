@@ -6,9 +6,6 @@ import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 import { CgCloseO, CgMenuRound } from 'react-icons/cg';
 
-/* Hier noch den Typ LinkTarget erstellen und sicherstellen,
-dass die Objekte in linkTargets diesem Typ entsprechen. */
-
 type LinkTarget = {
 	text: string;
 	url: string;
@@ -25,11 +22,11 @@ const linkTargets = [
 	},
 ] satisfies LinkTarget[];
 
-/* 
-Barrierefreies Menü:
-https://inclusive-components.design/menus-menu-buttons/
-*/
-
+/**
+ * Render the main navigation menu based on the current pathname and toggle the menu when necessary.
+ *
+ * @return {JSX.Element} The JSX element representing the main navigation menu.
+ */
 export default function MainNavigation() {
 	const pathname = usePathname();
 
@@ -56,6 +53,13 @@ export default function MainNavigation() {
 	);
 }
 
+/**
+ * Generate the menu items for the main navigation based on the provided link targets and current pathname.
+ *
+ * @param {LinkTarget[]} linkTargets - The array of link targets to generate menu items from.
+ * @param {string} pathname - The current pathname to determine the active page link.
+ * @return {JSX.Element[]} An array of JSX elements representing the menu items.
+ */
 function getMenuItems(linkTargets: LinkTarget[], pathname: string) {
 	/* Alle Link-Elemente sollen die CSS-Klasse main-navigation__link
     erhalten, zusätzlich soll das Link-Element, das der aktuell angezeigten

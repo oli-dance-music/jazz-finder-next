@@ -3,20 +3,23 @@ import classes from './MediaPlayer.module.css';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import { useMediaContext } from '@/lib/reducer/media';
-import List from '../primitives/List/List';
-import RecordingTeaser from '../Recording/RecordingTeaser';
-import { Suspense, useEffect } from 'react';
-import Card from '../primitives/Card/Card';
-import useConfirm from '@/hooks/useConfirm';
 import type { Recording as RecordingType } from '@/types/media';
-//import { useHeaderContext } from '../Header';
 
+/**
+ * Renders a media player component that allows the user to play a playlist of recordings.
+ *
+ * @return {JSX.Element} The rendered media player component.
+ */
 export default function MediaPlayer() {
 	const [{ playing, playlist }, mediaDispatch] = useMediaContext()!;
 	const recordings = playlist.recordings as RecordingType[] | [];
 
-	/* const [title, setTitle] = useHeaderContext(); */
-
+	/**
+	 * Handles the media player actions based on the provided action.
+	 *
+	 * @param {string} action - The action to be performed on the media player.
+	 * @return {void} This function does not return a value.
+	 */
 	const handleMediaPlayer = (action: string) => {
 		//if there is no playlist, we dont need to do anything
 		if (!recordings.length) return;

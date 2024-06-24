@@ -14,6 +14,12 @@ const MediaPlayerPlaylist = dynamic(
 );
 
 type Props = { children: ReactNode };
+/**
+ * Renders the default layout with media components, while using the Context API.
+ *
+ * @param {ReactNode} children - The child components to render within the layout.
+ * @return {JSX.Element} The rendered default layout with media components.
+ */
 export default function DefaultLayout({ children }: Props) {
 	const [media, mediaDispatch] = useMediaReducer();
 

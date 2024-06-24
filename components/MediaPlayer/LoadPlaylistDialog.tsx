@@ -12,6 +12,11 @@ import { useMediaContext } from '@/lib/reducer/media';
 type Props = {
 	disabled?: boolean;
 };
+/**
+ * Renders a dialog component for loading a playlist.
+ *
+ * @return {JSX.Element} The rendered dialog component.
+ */
 export default function LoadPlaylistDialog() {
 	const [{ playlist }, mediaDispatch] = useMediaContext()!;
 	const [playlists, setPlaylists] = useState<Playlist[] | null>(null);

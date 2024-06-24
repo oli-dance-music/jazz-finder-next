@@ -12,6 +12,12 @@ const RecordingButtons = dynamic(() => import('./RecordingButtons'), {
 	ssr: false,
 });
 
+/**
+ * Renders a teaser component for a recording.
+ *
+ * @param {Recording} recording - An object containing information about the recording, including artist, title, performers, year, record date, URL, and raw data.
+ * @return {JSX.Element} A React component representing the recording teaser.
+ */
 export default function RecordingTeaser(recording: Recording) {
 	const {
 		Artist: artist,

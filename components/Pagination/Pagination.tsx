@@ -7,6 +7,15 @@ type Props = {
 	pageSize: number;
 	currentPage: number;
 };
+/**
+ * Renders a pagination component that allows the user to navigate through a list of items.
+ *
+ * @param {Props} props - The properties for the component.
+ * @param {number} props.totalResults - The total number of items in the list.
+ * @param {number} props.pageSize - The number of items to display per page.
+ * @param {number} props.currentPage - The current page number.
+ * @return {JSX.Element} The pagination component.
+ */
 export default function Pagination({
 	totalResults,
 	pageSize,
@@ -22,6 +31,11 @@ export default function Pagination({
 	//calculate total number of pages
 	const totalPages = Math.ceil(totalResults / pageSize);
 
+	/**
+	 * Set the current page to the specified value.
+	 *
+	 * @param {number} value - The value to set as the current page.
+	 */
 	function setCurrentPage(value: number) {
 		const urlSearchParams = new URLSearchParams(searchParams);
 

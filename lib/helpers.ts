@@ -1,3 +1,10 @@
+/**
+ * Formats a given price in cents to a string representation with a currency symbol.
+ *
+ * @param {number} price - The price in cents to be formatted.
+ * @param {string} [currencySymbol=' €'] - The currency symbol to be appended to the formatted price.
+ * @return {string} The formatted price as a string.
+ */
 export function getFormattedPrice(price: number, currencySymbol = ' €') {
 	const formattedPrice =
 		(price / 100).toFixed(2).replace('.', ',') + currencySymbol;
@@ -5,6 +12,11 @@ export function getFormattedPrice(price: number, currencySymbol = ' €') {
 	return formattedPrice;
 }
 
+/**
+ * Retrieves the user's current geolocation using the Geolocation API.
+ *
+ * @return {Promise<GeolocationPosition>} A promise that resolves with the user's current geolocation.
+ */
 export function getUserLocation(): Promise<GeolocationPosition> {
 	// https://developer.mozilla.org/en-US/docs/Web/API/PositionOptions
 	const options: PositionOptions = {
@@ -13,19 +25,21 @@ export function getUserLocation(): Promise<GeolocationPosition> {
 		maximumAge: 0,
 	};
 
-	/* Die ältere geolocation-API basiert auf Callback-Funktionen statt
-      Promises. Hier wird sie in ein Promise verpackt, um sie in asynchronen
-      Funktionen nutzen zu können. */
 	return new Promise((resolve, reject) => {
 		window.navigator.geolocation.getCurrentPosition(resolve, reject, options);
 	});
 }
 
-/* Die exakte Berechnung der Distanz zwischen zwei Koordinaten ist nicht ganz trivial, da
-die Erde keine perfekte Kugel ist. Für die meisten Anwendungsfälle liefert die
-"Haversine-Formel" ausreichend genaue Ergebnisse. Hier eine leicht angepasste
-Version dieser Implementierung: http://www.geodatasource.com/developers/javascript
-Auf der Seite findet man auch Versionen für andere Sprachen, z.B. PHP. */
+/**
+ * Calculates the distance between two sets of geographical coordinates using the Haversine formula.
+ *
+ * @param {number} lat1 - The latitude of the first coordinate.
+ * @param {number} lon1 - The longitude of the first coordinate.
+ * @param {number} lat2 - The latitude of the second coordinate.
+ * @param {number} lon2 - The longitude of the second coordinate.
+ * @param {'K' | 'N' | 'M'} [unit='K'] - The unit of distance to calculate: 'K' for kilometers, 'N' for nautical miles, 'M' for miles.
+ * @return {number} The calculated distance between the two coordinates.
+ */
 export function getDistance(
 	lat1: number,
 	lon1: number,
@@ -49,17 +63,22 @@ export function getDistance(
 	}
 	dist = Math.acos(dist);
 	dist = (dist * 180) / Math.PI;
-	dist = dist * 60 * 1.1515; // Ergibt Entfernung in Meilen
-	// Ggf. Umrechnung in Kilometer oder nautische Meilen
+	dist = dist * 60 * 1.1515; // distance in miles
+
 	if (unit == 'K') {
-		dist = dist * 1.609344;
+		dist = dist * 1.609344; // distance in kilometers
 	} else if (unit == 'N') {
-		dist = dist * 0.8684;
+		dist = dist * 0.8684; // distance in nautical miles
 	}
 	return dist;
 }
 
-// Diese Funktion wartet eine bestimmte Zeit, bevor sie ein Promise auflöst.
+/**
+ * A function that creates a promise that resolves after a specified time.
+ *
+ * @param {number} ms - The time to wait in milliseconds.
+ * @return {Promise<void>} A promise that resolves after the specified time.
+ */
 export function wait(ms: number) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }

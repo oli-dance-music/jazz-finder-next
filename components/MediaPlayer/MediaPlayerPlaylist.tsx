@@ -7,6 +7,11 @@ import SavePlaylistDialog from './SavePlaylistDialog';
 import LoadPlaylistDialog from './LoadPlaylistDialog';
 import DeletePlaylistDialog from './DeletePlaylistDialog';
 
+/**
+ * Function that handles media player actions based on the provided action.
+ *
+ * @param {string} action - The action to be performed (e.g., 'startPlaylist', 'next').
+ */
 export default function MediaPlayerPlaylist() {
 	const [{ playing, playlist }, mediaDispatch] = useMediaContext()!;
 
@@ -22,6 +27,12 @@ export default function MediaPlayerPlaylist() {
 			});
 		}
 	);
+	/**
+	 * A function that handles different actions based on the provided 'action' parameter.
+	 *
+	 * @param {string} action - The action to be performed ('startPlaylist', 'next', 'previous', 'emptyPlaylist'). TODO: Make this a union type
+	 * @return {void} This function does not return a value.
+	 */
 	const handleMediaPlayer = (action: string) => {
 		//if there is no playlist, we dont need to do anything
 		if (!recordings) return;
@@ -116,6 +127,12 @@ export default function MediaPlayerPlaylist() {
 		</Card>
 	);
 }
+/**
+ * Saves the provided playlist to the browser's local storage.
+ *
+ * @param {PlaylistType} playlist - The playlist to be saved.
+ * @return {void} This function does not return a value.
+ */
 function useLocalStorage(playlist: PlaylistType) {
 	useEffect(() => {
 		localStorage.setItem('playlist', JSON.stringify(playlist));
